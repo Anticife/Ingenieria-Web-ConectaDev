@@ -3,6 +3,11 @@
 
 **Institución:** Universidad Cooperativa de Colombia  
 **Curso:** Ingeniería Web — Periodo 2620  
+**Integrantes del Equipo:**
+- **Andrés Hurtado**
+- **Samuel Pineda**
+- **Viviana Roa**
+
 **Repositorio / Entregables del Proyecto:**
 - Ontología OWL 2 DL: [`ontologia/conectadev.owl`](file:///C:/Users/Andres%20Hurtado/Documents/Ing%20Web/ontologia/conectadev.owl) y [`ontologia/GUIA_PROTEGE.md`](file:///C:/Users/Andres%20Hurtado/Documents/Ing%20Web/ontologia/GUIA_PROTEGE.md)
 - Grafo de Conocimiento Neo4j: [`neo4j/conectadev_grafo.cypher`](file:///C:/Users/Andres%20Hurtado/Documents/Ing%20Web/neo4j/conectadev_grafo.cypher) y [`neo4j/GUIA_NEO4J.md`](file:///C:/Users/Andres%20Hurtado/Documents/Ing%20Web/neo4j/GUIA_NEO4J.md)

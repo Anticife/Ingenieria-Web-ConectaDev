@@ -2,9 +2,12 @@
 
 **Plataforma Web Inteligente para Vinculación de Proyectos de Software, Diagnóstico de Brechas Técnicas y Rutas de Aprendizaje**
 
-- **Asignatura:** Ingeniería Web (Código: 2620) — Periodo Académico 2026-10
-- **Programa:** Ingeniería de Sistemas — Departamento de Sistemas, Facultad de Ingeniería
-- **Institución:** Pontificia Universidad Javeriana
+- **Asignatura:** Ingeniería Web (Código: 2620) — Periodo 2620
+- **Institución:** Universidad Cooperativa de Colombia
+- **Integrantes del Equipo:**
+  - **Andrés Hurtado**
+  - **Samuel Pineda**
+  - **Viviana Roa**
 
 ---
 
