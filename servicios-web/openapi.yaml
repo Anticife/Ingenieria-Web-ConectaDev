@@ -1,0 +1,428 @@
+openapi: 3.0.3
+info:
+  title: ConectaDev REST API - Proyectos de Software, Competencias y Rutas de Aprendizaje
+  version: 2.0.0
+  description: |
+    Especificación OpenAPI 3.0.3 para los servicios web de **ConectaDev** (Proyecto Final de Ingeniería Web - 2620).
+    Soporta las funcionalidades principales de gestión de proyectos de software, evaluación de compatibilidad de habilidades,
+    recomendación de cursos para cierre de brechas técnicas y postulación a equipos de desarrollo.
+  contact:
+    name: Equipo de Ingeniería Web 2620 - Universidad Cooperativa de Colombia
+servers:
+  - url: https://api.conectadev.edu.co/v1
+    description: Servidor Principal (Producción)
+  - url: http://localhost:3000/v1
+    description: Entorno de Desarrollo Local
+
+security:
+  - BearerAuth: []
+
+paths:
+  /proyectos:
+    get:
+      summary: Listar y filtrar proyectos de software con cálculo de compatibilidad
+      operationId: listarProyectos
+      tags:
+        - Proyectos de Software
+      parameters:
+        - name: areaTecnologica
+          in: query
+          description: Filtrar por enfoque técnico (Frontend, Backend, FullStack, Datos).
+          schema:
+            type: string
+            enum: [Frontend, Backend, FullStack, Datos]
+        - name: tecnologiaId
+          in: query
+          description: Identificador de la habilidad técnica requerida (ej. TECH-REACT, TECH-NODE).
+          schema:
+            type: string
+        - name: soloConvocatoriaAbierta
+          in: query
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Catálogo de proyectos recuperado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProyectoListResponse'
+
+    post:
+      summary: Publicar un nuevo proyecto de software (Rol Líder de Proyecto)
+      operationId: crearProyecto
+      tags:
+        - Proyectos de Software
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearProyectoRequest'
+      responses:
+        '201':
+          description: Proyecto de software publicado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProyectoSingleResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+
+  /proyectos/{proyectoId}/brecha-habilidades:
+    get:
+      summary: Diagnosticar brecha de habilidades y recomendar cursos para un proyecto
+      operationId: diagnosticarBrechaYRecomendarCursos
+      tags:
+        - Recomendaciones y Aprendizaje
+      parameters:
+        - name: proyectoId
+          in: path
+          required: true
+          example: PROY-01
+          schema:
+            type: string
+        - name: desarrolladorId
+          in: query
+          required: true
+          example: DEV-02
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Diagnóstico de habilidades cumplidas, faltantes y ruta de cursos sugerida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagnosticoBrechaResponse'
+
+  /desarrolladores/{desarrolladorId}/perfil:
+    put:
+      summary: Actualizar las tecnologías dominadas y experiencia del desarrollador
+      operationId: actualizarPerfilDesarrollador
+      tags:
+        - Desarrolladores y Perfiles
+      parameters:
+        - name: desarrolladorId
+          in: path
+          required: true
+          example: DEV-01
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActualizarPerfilRequest'
+      responses:
+        '200':
+          description: Perfil actualizado con clasificación profesional inferida (ej. DesarrolladorFullStack)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerfilDesarrolladorResponse'
+
+  /proyectos/{proyectoId}/candidatos-sugeridos:
+    get:
+      summary: Obtener desarrolladores y duplas complementarias recomendadas para un proyecto
+      operationId: recomendarCandidatosProyecto
+      tags:
+        - Recomendaciones y Aprendizaje
+      parameters:
+        - name: proyectoId
+          in: path
+          required: true
+          example: PROY-01
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ranking de candidatos individuales y duplas complementarias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CandidatosRecomendadosResponse'
+
+  /postulaciones:
+    post:
+      summary: Postular un desarrollador a un proyecto de software abierto
+      operationId: registrarPostulacion
+      tags:
+        - Proyectos de Software
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearPostulacionRequest'
+      responses:
+        '201':
+          description: Postulación registrada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostulacionResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    MetaEnvelope:
+      type: object
+      properties:
+        requestId:
+          type: string
+          example: req-dev-2026-019
+        timestamp:
+          type: string
+          format: date-time
+
+    CrearProyectoRequest:
+      type: object
+      required:
+        - titulo
+        - modalidad
+        - liderId
+        - tecnologiasRequeridas
+        - cuposDisponibles
+        - repositorioGitUrl
+      properties:
+        titulo:
+          type: string
+          example: Sistema Web de Citas y Telemedicina Universitaria
+        modalidad:
+          type: string
+          enum: [Semillero de Investigación, Proyecto Integrador, Innovación Abierta]
+        liderId:
+          type: string
+          example: LID-01
+        tecnologiasRequeridas:
+          type: array
+          items:
+            type: string
+          example: ["TECH-REACT", "TECH-NODE", "TECH-PG"]
+        cuposDisponibles:
+          type: integer
+          minimum: 1
+          example: 3
+        repositorioGitUrl:
+          type: string
+          example: https://github.com/ucc-ingweb/telemedicina-web
+
+    ProyectoDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        modalidad:
+          type: string
+        liderNombre:
+          type: string
+        cuposDisponibles:
+          type: integer
+        convocatoriaAbierta:
+          type: boolean
+        tecnologiasRequeridas:
+          type: array
+          items:
+            type: string
+        porcentajeCompatibilidadUsuario:
+          type: number
+          example: 100.0
+
+    ProyectoListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProyectoDTO'
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    ProyectoSingleResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ProyectoDTO'
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    DiagnosticoBrechaResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            proyectoId:
+              type: string
+            desarrolladorId:
+              type: string
+            porcentajeCompatibilidad:
+              type: number
+              example: 33.3
+            habilidadesCumplidas:
+              type: array
+              items:
+                type: string
+              example: ["React.js"]
+            habilidadesFaltantes:
+              type: array
+              items:
+                type: string
+              example: ["Node.js & Express", "PostgreSQL"]
+            cursosRecomendados:
+              type: array
+              items:
+                type: object
+                properties:
+                  cursoId:
+                    type: string
+                  titulo:
+                    type: string
+                  habilidadQueCubre:
+                    type: string
+                  horasDuracion:
+                    type: integer
+                  prerrequisito:
+                    type: string
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    ActualizarPerfilRequest:
+      type: object
+      required:
+        - semestreActual
+        - aniosExperiencia
+        - habilidadesDominadasIds
+      properties:
+        semestreActual:
+          type: integer
+          minimum: 1
+          maximum: 10
+          example: 8
+        aniosExperiencia:
+          type: integer
+          minimum: 0
+          example: 2
+        habilidadesDominadasIds:
+          type: array
+          items:
+            type: string
+          example: ["TECH-JS", "TECH-REACT", "TECH-NODE", "TECH-PG"]
+
+    PerfilDesarrolladorResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            desarrolladorId:
+              type: string
+            nombre:
+              type: string
+            perfilInferido:
+              type: string
+              example: DesarrolladorFullStack
+            habilidadesDominadas:
+              type: array
+              items:
+                type: string
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    CandidatosRecomendadosResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            candidatosIndividuales:
+              type: array
+              items:
+                type: object
+                properties:
+                  desarrolladorId:
+                    type: string
+                  nombre:
+                    type: string
+                  porcentajeCompatibilidad:
+                    type: number
+            duplasComplementarias:
+              type: array
+              items:
+                type: object
+                properties:
+                  integranteFrontend:
+                    type: string
+                  integranteBackend:
+                    type: string
+                  coberturaConjunta:
+                    type: number
+                    example: 100.0
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    CrearPostulacionRequest:
+      type: object
+      required:
+        - desarrolladorId
+        - proyectoId
+        - mensajeMotivacion
+      properties:
+        desarrolladorId:
+          type: string
+          example: DEV-01
+        proyectoId:
+          type: string
+          example: PROY-01
+        mensajeMotivacion:
+          type: string
+          example: Cuento con experiencia en React, Node.js y PostgreSQL en semilleros previos.
+
+    PostulacionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            postulacionId:
+              type: string
+              example: POST-2026-409
+            estado:
+              type: string
+              example: EN_REVISION_POR_LIDER
+            proyectoEstadoActualizado:
+              type: string
+              example: ProyectoListoParaIniciar
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        meta:
+          $ref: '#/components/schemas/MetaEnvelope'
+
+  responses:
+    ValidationError:
+      description: Error de validación en los datos enviados
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

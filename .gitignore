@@ -1,0 +1,11 @@
+# Excluir salidas de graphify
+graphify-out/
+
+# Archivos de sistema y temporales
+.DS_Store
+Thumbs.db
+Desktop.ini
+__pycache__/
+*.py[cod]
+*.swp
+*~

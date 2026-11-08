@@ -1,0 +1,391 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.ingweb2620.edu.co/ontologias/conectadev#"
+     xml:base="http://www.ingweb2620.edu.co/ontologias/conectadev"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:dev="http://www.ingweb2620.edu.co/ontologias/conectadev#">
+    <owl:Ontology rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev">
+        <rdfs:label xml:lang="es">Ontología ConectaDev - Gestión de Competencias, Proyectos de Software y Rutas de Aprendizaje</rdfs:label>
+        <rdfs:comment xml:lang="es">Ontología de dominio para el Proyecto Final de Ingeniería Web (Periodo 2620 - Universidad Cooperativa de Colombia). Modela desarrolladores, líderes de proyecto, mentores académicos, tecnologías de software (Frontend, Backend, Bases de Datos), proyectos de desarrollo y cursos formativos con sus prerrequisitos.</rdfs:comment>
+        <owl:versionInfo>2.0.0</owl:versionInfo>
+    </owl:Ontology>
+
+    <!-- 
+    =======================================================================================
+    PROPIEDADES DE OBJETO (11 Propiedades de Objeto - Mínimo exigido: 10)
+    =======================================================================================
+     -->
+
+    <!-- 1. dominaHabilidad -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#dominaHabilidad">
+        <owl:inverseOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#esDominadaPor"/>
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">domina habilidad técnica</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 2. esDominadaPor (Inversa de dominaHabilidad) -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#esDominadaPor">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <rdfs:label xml:lang="es">es dominada por</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 3. requiereHabilidad -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#requiereHabilidad">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">requiere habilidad técnica</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 4. lideraProyecto -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#lideraProyecto">
+        <owl:inverseOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#esLideradoPor"/>
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#LiderProyecto"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:label xml:lang="es">lidera proyecto</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 5. esLideradoPor (Inversa de lideraProyecto) -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#esLideradoPor">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#LiderProyecto"/>
+        <rdfs:label xml:lang="es">es liderado por</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 6. postulaAProyecto -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#postulaAProyecto">
+        <owl:inverseOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#tienePostulante"/>
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:label xml:lang="es">postula a proyecto</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 7. tienePostulante (Inversa de postulaAProyecto) -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#tienePostulante">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <rdfs:label xml:lang="es">tiene postulante</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 8. ensenaHabilidad -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#ensenaHabilidad">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">enseña habilidad técnica</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 9. supervisaCurso -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#supervisaCurso">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#MentorAcademico"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <rdfs:label xml:lang="es">supervisa curso formativo</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 10. tienePrerrequisito (Propiedad Transitiva entre Cursos) -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#tienePrerrequisito">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <rdfs:label xml:lang="es">tiene prerrequisito (transitiva)</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- 11. dependeDeTecnologia (Propiedad Transitiva entre Tecnologías) -->
+    <owl:ObjectProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#dependeDeTecnologia">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:range rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">depende de tecnología base (transitiva)</rdfs:label>
+    </owl:ObjectProperty>
+
+
+    <!-- 
+    =======================================================================================
+    PROPIEDADES DE DATOS (6 Propiedades de Datos - Mínimo exigido: 5)
+    =======================================================================================
+     -->
+
+    <!-- 1. semestreActual -->
+    <owl:DatatypeProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#semestreActual">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label xml:lang="es">semestre o nivel actual</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- 2. aniosExperiencia -->
+    <owl:DatatypeProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#aniosExperiencia">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#UsuarioPlataforma"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label xml:lang="es">años de experiencia en desarrollo</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- 3. horasDuracionCurso -->
+    <owl:DatatypeProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#horasDuracionCurso">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label xml:lang="es">duración del curso en horas</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- 4. cuposDisponibles -->
+    <owl:DatatypeProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#cuposDisponibles">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label xml:lang="es">cupos disponibles en el equipo</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- 5. repositorioGitUrl -->
+    <owl:DatatypeProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#repositorioGitUrl">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="es">URL del repositorio Git</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- 6. convocatoriaAbierta -->
+    <owl:DatatypeProperty rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#convocatoriaAbierta">
+        <rdfs:domain rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label xml:lang="es">convocatoria abierta para postulación</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- 
+    =======================================================================================
+    CLASES Y RESTRICCIONES (12 Clases y 4 Restricciones Lógicas OWL - Mínimo: 8 clases, 3 restricciones)
+    =======================================================================================
+     -->
+
+    <!-- Clase 1: UsuarioPlataforma -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#UsuarioPlataforma">
+        <rdfs:label xml:lang="es">Usuario de la Plataforma</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 2: Desarrollador (Tipo de Usuario 1) -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador">
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#UsuarioPlataforma"/>
+        <rdfs:label xml:lang="es">Desarrollador / Estudiante de Ingeniería</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 3: DesarrolladorFullStack (Clase Definida con Restricciones #1 y #2 para Inferencia Automática) -->
+    <!-- INFERENCIA 1: Todo Desarrollador que domina al menos una TecnologiaFrontend Y al menos una TecnologiaBackend es clasificado automáticamente como DesarrolladorFullStack -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#DesarrolladorFullStack">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#dominaHabilidad"/>
+                        <owl:someValuesFrom rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaFrontend"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#dominaHabilidad"/>
+                        <owl:someValuesFrom rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaBackend"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <rdfs:label xml:lang="es">Desarrollador FullStack (Inferido)</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 4: LiderProyecto (Tipo de Usuario 2) -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#LiderProyecto">
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#UsuarioPlataforma"/>
+        <rdfs:label xml:lang="es">Líder Técnico de Proyecto</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 5: MentorAcademico (Tipo de Usuario 3) -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#MentorAcademico">
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#UsuarioPlataforma"/>
+        <rdfs:label xml:lang="es">Mentor / Coordinador Académico</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 6: ProyectoSoftware (Con Restricción #3: todo proyecto requiere al menos una HabilidadTecnica) -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#requiereHabilidad"/>
+                <owl:someValuesFrom rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="es">Proyecto de Ingeniería de Software</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 7: ProyectoListoParaIniciar (Clase Definida con Restricción #4 para Inferencia Automática) -->
+    <!-- INFERENCIA 2: Todo ProyectoSoftware que tiene convocatoriaAbierta = true y cuenta con al menos un postulante Desarrollador es clasificado automáticamente como ProyectoListoParaIniciar -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoListoParaIniciar">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#tienePostulante"/>
+                        <owl:someValuesFrom rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#convocatoriaAbierta"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <rdfs:label xml:lang="es">Proyecto Listo para Iniciar (Inferido)</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 8: HabilidadTecnica -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica">
+        <rdfs:label xml:lang="es">Habilidad o Tecnología de Software</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 9: TecnologiaFrontend -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaFrontend">
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">Tecnología Frontend</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 10: TecnologiaBackend -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaBackend">
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">Tecnología Backend</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 11: TecnologiaBaseDatos -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaBaseDatos">
+        <rdfs:subClassOf rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#HabilidadTecnica"/>
+        <rdfs:label xml:lang="es">Motor de Base de Datos</rdfs:label>
+    </owl:Class>
+
+    <!-- Clase 12: CursoFormativo -->
+    <owl:Class rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo">
+        <rdfs:label xml:lang="es">Curso o Módulo de Ruta de Aprendizaje</rdfs:label>
+    </owl:Class>
+
+
+    <!-- 
+    =======================================================================================
+    INDIVIDUOS DEL DOMINIO (15 Individuos - Mínimo exigido: 8)
+    =======================================================================================
+     -->
+
+    <!-- Tecnologías Frontend (3) -->
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_JavaScript">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaFrontend"/>
+        <rdfs:label xml:lang="es">JavaScript ES6+</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_React">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaFrontend"/>
+        <dev:dependeDeTecnologia rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_JavaScript"/>
+        <rdfs:label xml:lang="es">React.js</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_NextJS">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaFrontend"/>
+        <dev:dependeDeTecnologia rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_React"/>
+        <rdfs:label xml:lang="es">Next.js Framework</rdfs:label>
+    </owl:NamedIndividual>
+
+    <!-- Tecnologías Backend y Base de Datos (3) -->
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_NodeJS">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaBackend"/>
+        <rdfs:label xml:lang="es">Node.js &amp; Express</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_SpringBoot">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaBackend"/>
+        <rdfs:label xml:lang="es">Java Spring Boot</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_PostgreSQL">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#TecnologiaBaseDatos"/>
+        <rdfs:label xml:lang="es">PostgreSQL</rdfs:label>
+    </owl:NamedIndividual>
+
+    <!-- Cursos Formativos encadenados para demostrar transitividad tienePrerrequisito (3) -->
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_FundamentosPOO">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <dev:horasDuracionCurso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</dev:horasDuracionCurso>
+        <rdfs:label xml:lang="es">1. Fundamentos de Programación y Lógica</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_APIsREST_NodeJS">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <dev:tienePrerrequisito rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_FundamentosPOO"/>
+        <dev:ensenaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_NodeJS"/>
+        <dev:horasDuracionCurso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32</dev:horasDuracionCurso>
+        <rdfs:label xml:lang="es">2. Desarrollo de APIs REST con Node.js</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_ArquitecturaFullStack">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#CursoFormativo"/>
+        <dev:tienePrerrequisito rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_APIsREST_NodeJS"/>
+        <dev:ensenaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_NextJS"/>
+        <dev:horasDuracionCurso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">40</dev:horasDuracionCurso>
+        <rdfs:label xml:lang="es">3. Arquitectura de Aplicaciones Web FullStack</rdfs:label>
+    </owl:NamedIndividual>
+
+    <!-- Usuarios: Desarrolladores, Líder de Proyecto y Mentor (4) -->
+    <!-- Dev_AnaSofia domina React (Frontend) y NodeJS (Backend) -> Será inferida como DesarrolladorFullStack -->
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Dev_AnaSofia">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <dev:dominaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_React"/>
+        <dev:dominaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_NodeJS"/>
+        <dev:dominaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_PostgreSQL"/>
+        <dev:postulaAProyecto rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Proy_PlataformaTelemedicina"/>
+        <dev:semestreActual rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</dev:semestreActual>
+        <dev:aniosExperiencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</dev:aniosExperiencia>
+        <rdfs:label xml:lang="es">Ana Sofía Gómez (Estudiante Ing. Software)</rdfs:label>
+    </owl:NamedIndividual>
+
+    <!-- Dev_CarlosMario solo domina Frontend (React) -> Permanece como Desarrollador sin ser FullStack -->
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Dev_CarlosMario">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Desarrollador"/>
+        <dev:dominaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_JavaScript"/>
+        <dev:dominaHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_React"/>
+        <dev:semestreActual rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</dev:semestreActual>
+        <dev:aniosExperiencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</dev:aniosExperiencia>
+        <rdfs:label xml:lang="es">Carlos Mario Restrepo (Desarrollador Frontend)</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Lider_IngAlejandro">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#LiderProyecto"/>
+        <dev:lideraProyecto rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Proy_PlataformaTelemedicina"/>
+        <dev:aniosExperiencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</dev:aniosExperiencia>
+        <rdfs:label xml:lang="es">Ing. Alejandro Vargas (Líder Técnico)</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Mentor_DraElena">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#MentorAcademico"/>
+        <dev:supervisaCurso rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_APIsREST_NodeJS"/>
+        <dev:supervisaCurso rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Curso_ArquitecturaFullStack"/>
+        <dev:aniosExperiencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</dev:aniosExperiencia>
+        <rdfs:label xml:lang="es">Dra. Elena Martínez (Mentora Académica)</rdfs:label>
+    </owl:NamedIndividual>
+
+    <!-- Proyectos de Software (2) -->
+    <!-- Proy_PlataformaTelemedicina será inferido como ProyectoListoParaIniciar -->
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Proy_PlataformaTelemedicina">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <dev:requiereHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_React"/>
+        <dev:requiereHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_NodeJS"/>
+        <dev:requiereHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_PostgreSQL"/>
+        <dev:cuposDisponibles rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</dev:cuposDisponibles>
+        <dev:convocatoriaAbierta rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</dev:convocatoriaAbierta>
+        <dev:repositorioGitUrl rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://github.com/ucc-ingweb/telemedicina-web</dev:repositorioGitUrl>
+        <rdfs:label xml:lang="es">Sistema Web de Citas y Telemedicina Universitaria</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.ingweb2620.edu.co/ontologias/conectadev#Proy_PasarelaPagosFinTech">
+        <rdf:type rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#ProyectoSoftware"/>
+        <dev:requiereHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_SpringBoot"/>
+        <dev:requiereHabilidad rdf:resource="http://www.ingweb2620.edu.co/ontologias/conectadev#Tech_PostgreSQL"/>
+        <dev:cuposDisponibles rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</dev:cuposDisponibles>
+        <dev:convocatoriaAbierta rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</dev:convocatoriaAbierta>
+        <dev:repositorioGitUrl rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://github.com/ucc-ingweb/fintech-pagos</dev:repositorioGitUrl>
+        <rdfs:label xml:lang="es">Microservicio de Pagos y Billetera Estudiantil</rdfs:label>
+    </owl:NamedIndividual>
+
+</rdf:RDF>

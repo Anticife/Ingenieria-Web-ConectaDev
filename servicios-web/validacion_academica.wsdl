@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ValidacionAcademicaRegistroService"
+             targetNamespace="http://www.ingweb2620.edu.co/ws/soap/registroacademico"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.ingweb2620.edu.co/ws/soap/registroacademico"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <documentation>
+        Contrato WSDL 1.1 para el Servicio Web SOAP de Validación de Prerrequisitos y Certificación Académica
+        (Integración entre ConectaDev y el Sistema Institucional de Registro y Control Académico Universitario).
+        Proyecto Final de Ingeniería Web (2620) - Universidad Cooperativa de Colombia.
+    </documentation>
+
+    <!-- 1. TIPOS DE DATOS XML SCHEMA (XSD) -->
+    <types>
+        <xsd:schema targetNamespace="http://www.ingweb2620.edu.co/ws/soap/registroacademico">
+            
+            <!-- Mensaje de Entrada: Solicitud de Verificación de Curso y Habilidad Aprobada -->
+            <xsd:element name="VerificarCertificacionCursoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codigoEstudiante" type="xsd:string"/>
+                        <xsd:element name="codigoCursoFormativo" type="xsd:string"/>
+                        <xsd:element name="codigoMentorSupervisor" type="xsd:string"/>
+                        <xsd:element name="calificacionObtenida" type="xsd:decimal"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Mensaje de Salida: Certificado Oficial de Competencia Emitido -->
+            <xsd:element name="VerificarCertificacionCursoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="folioRegistroAcademico" type="xsd:string"/>
+                        <xsd:element name="codigoEstudiante" type="xsd:string"/>
+                        <xsd:element name="prerrequisitosCumplidos" type="xsd:boolean"/>
+                        <xsd:element name="habilidadTecnicaAcreditada" type="xsd:string"/>
+                        <xsd:element name="perfilProfesionalActualizado" type="xsd:string"/>
+                        <xsd:element name="fechaRegistroUTC" type="xsd:dateTime"/>
+                        <xsd:element name="mensajeConfirmacion" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Fallo SOAP Estandarizado -->
+            <xsd:element name="FalloValidacionAcademica">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codigoError" type="xsd:string"/>
+                        <xsd:element name="detallePrerrequisitoFaltante" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </types>
+
+    <!-- 2. MENSAJES ABSTRACTOS (INPUT / OUTPUT / FAULT) -->
+    <message name="VerificarCertificacionInput">
+        <part name="parameters" element="tns:VerificarCertificacionCursoRequest"/>
+    </message>
+
+    <message name="VerificarCertificacionOutput">
+        <part name="parameters" element="tns:VerificarCertificacionCursoResponse"/>
+    </message>
+
+    <message name="VerificarCertificacionFault">
+        <part name="fault" element="tns:FalloValidacionAcademica"/>
+    </message>
+
+    <!-- 3. PORT TYPE (INTERFAZ DE OPERACIONES) -->
+    <portType name="ValidacionAcademicaPortType">
+        <operation name="VerificarCertificacionCurso">
+            <documentation>Verifica que el estudiante cumpla la cadena de prerrequisitos del curso y acredita oficialmente la nueva habilidad técnica en su perfil.</documentation>
+            <input message="tns:VerificarCertificacionInput"/>
+            <output message="tns:VerificarCertificacionOutput"/>
+            <fault name="FalloValidacion" message="tns:VerificarCertificacionFault"/>
+        </operation>
+    </portType>
+
+    <!-- 4. BINDING (PROTOCOLO SOAP 1.1 SOBRE HTTP DOCUMENT/LITERAL) -->
+    <binding name="ValidacionAcademicaSoapBinding" type="tns:ValidacionAcademicaPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="VerificarCertificacionCurso">
+            <soap:operation soapAction="http://www.ingweb2620.edu.co/ws/soap/registroacademico/VerificarCertificacionCurso"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="FalloValidacion">
+                <soap:fault name="FalloValidacion" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+
+    <!-- 5. SERVICE Y ENDPOINT -->
+    <service name="ValidacionAcademicaRegistroService">
+        <documentation>Endpoint SOAP de interoperabilidad con el sistema de Registro Académico</documentation>
+        <port name="ValidacionAcademicaPort" binding="tns:ValidacionAcademicaSoapBinding">
+            <soap:address location="https://api.conectadev.edu.co/soap/v1/registro-academico"/>
+        </port>
+    </service>
+
+</definitions>
